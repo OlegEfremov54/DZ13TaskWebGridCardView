@@ -1,5 +1,6 @@
 package com.example.dz13taskwebgridcardview
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -27,8 +28,10 @@ class MainActivity : AppCompatActivity() {
         GridViewModal("БКС", R.drawable.bks, "https://bcs.ru/"),
         GridViewModal("Атон", R.drawable.aton, "https://www.aton.ru/")
     )
+    private var urlString:String = ""
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -46,31 +49,25 @@ class MainActivity : AppCompatActivity() {
         toolbarMain.subtitle = " Вер.1.Главная страница"
         toolbarMain.setLogo(R.drawable.db)
 
+        // Заполнение Грид виев
         gridViewGV = findViewById(R.id.gridViewGV)
-
 
         val adapter = GridViewAdapter(list = list, this@MainActivity)
         gridViewGV.adapter = adapter
 
+        // Обработка нажатия выбранного сайта
         gridViewGV.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             Toast.makeText(
                 applicationContext,
                 "Выбран сайт: ${list[position].adres}",
                 Toast.LENGTH_SHORT
             ).show()
-
+            urlString = "${list[position].adres}"
            val intent= Intent(this, MainActivity2::class.java)
-           // intent.putExtra("product", product)
-           // intent.putExtra("products", this.productViewModel.products as ArrayList<Product> )
-           // intent.putExtra("positions", item)
-           // intent.putExtra("chek", chek)
-          //  startActivity(intent)
-           startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(list[position].adres)))
-
+              intent.putExtra("URL", urlString)
+              startActivity(intent)
+           //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(list[position].adres)))
         }
-
-
-
 
     }
     // Активация Меню

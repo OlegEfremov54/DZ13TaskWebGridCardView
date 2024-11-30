@@ -34,15 +34,13 @@ class MainActivity2 : AppCompatActivity() {
         toolbarWeb.subtitle = " Страница Браузера"
         toolbarWeb.setLogo(R.drawable.db)
 
+        //Передаем из интент URL и запускаем просмотр
+
         webViewWV=findViewById(R.id.webViewWV)
         webViewWV.webViewClient = WebViewClient()
-        val data = intent.data
-        webViewWV.loadUrl(data.toString())
-
-
-
-
-
+        //val url = intent.getStringExtra("url")
+        val url = intent.getStringExtra("URL")
+        webViewWV.loadUrl(url.toString())
 
     }
 
